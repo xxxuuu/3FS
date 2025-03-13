@@ -1,4 +1,8 @@
-set(CLANG_FORMAT "/usr/bin/clang-format-14")
+find_program(CLANG_FORMAT
+NAMES clang-format clang-format-14 clang-format-15
+PATHS /usr/bin /usr/local/bin
+DOC "Path to clang-format executable"
+NO_ERROR)
 if(EXISTS ${CLANG_FORMAT})
     message(STATUS "Found clang-format at ${CLANG_FORMAT}")
 
