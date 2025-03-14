@@ -1,7 +1,7 @@
 # clang-tidy generates too many warnings, so just disable it by default.
 option(ENABLE_CLANG_TIDY "Run clang-tidy during build" OFF)
 
-find_program(CLANG_TIDY NAMES clang-tidy-14)
+find_program(CLANG_TIDY NAMES clang-tidy)
 if(CLANG_TIDY)
     if(CMake_SOURCE_DIR STREQUAL CMake_BINARY_DIR)
         message(FATAL_ERROR "CMake_RUN_CLANG_TIDY requires an out-of-source build!")
@@ -42,11 +42,11 @@ if(CLANG_TIDY)
     # Taking a quick route for now. We should deal with it sometime down the line.
     add_custom_target(clang-tidy
         COMMENT "Running clang-tidy"
-        COMMAND run-clang-tidy-14 -header-filter ${HEADER_FILTER} `find ${SOURCE_DIRS} -name "*.cc" -o -name "*.cpp" -not -name "*.actor.cpp" ` -quiet)
+        COMMAND run-clang-tidy -header-filter ${HEADER_FILTER} `find ${SOURCE_DIRS} -name "*.cc" -o -name "*.cpp" -not -name "*.actor.cpp" ` -quiet)
 
     add_custom_target(clang-tidy-fix
         COMMENT "Running clang-tidy -fix"
-        COMMAND run-clang-tidy-14 -header-filter ${HEADER_FILTER} `find ${SOURCE_DIRS} -name "*.cc" -o -name "*.cpp" -not -name "*.actor.cpp" ` -fix -quiet)
+        COMMAND run-clang-tidy -header-filter ${HEADER_FILTER} `find ${SOURCE_DIRS} -name "*.cc" -o -name "*.cpp" -not -name "*.actor.cpp" ` -fix -quiet)
 else()
-    message(WARNING "clang-tidy-14 not found!!!")
+    message(WARNING "clang-tidy not found!!!")
 endif()
